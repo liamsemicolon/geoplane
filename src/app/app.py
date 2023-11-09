@@ -29,7 +29,7 @@ def main_menu():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()          
-        menu = pygame_menu.Menu(
+            menu = pygame_menu.Menu(
             height=720,
             theme=pygame_menu.themes.THEME_BLUE,
             title=TITLE,

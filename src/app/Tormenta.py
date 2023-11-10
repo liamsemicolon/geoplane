@@ -4,8 +4,8 @@ import random
 class Tormenta:
     def __init__(self, bg, sprite):
         #parametros y valores iniciales
-        self.COORDENADA_X_INICIAL = 1510
-        self.COORDENADA_Y_INICIAL = 1950
+        self.COORDENADA_X_INICIAL = 600
+        self.COORDENADA_Y_INICIAL = 600
         self.VELOCIDAD_INICIAL = 2.5
         self.COLOR_INICIAL = (250, 120, 60, 0)
         
@@ -14,7 +14,7 @@ class Tormenta:
         self.YlimiteAbajo = 2649
         self.XLimiteIzquierdo = 0
         self.XLimiteDerecho = 4405
-        self.size = 100
+        self.size = 350
         self.sprite = pygame.transform.scale(sprite,(self.size, self.size))
         self.x = self.COORDENADA_X_INICIAL
         self.y = self.COORDENADA_Y_INICIAL
@@ -73,12 +73,15 @@ class Tormenta:
             # se mueve
             self.x += step * direccion[0]
             self.y += step * direccion[1]
-            print("Tormenta : [" + str(self.x) + ", " + str(self.y) +  "]")
+           
         else:
             self.moverAPuntoAleatorio()
-        self.rect = pygame.Rect(int(self.x), int(self.y), 128, 128)
+        self.rect = pygame.Rect(int(self.x), int(self.y), self.size, self.size)
     
     def getX(self):
         return self.x
     def getY(self):
         return self.y
+    
+    def getRet(self):
+        return self.rect

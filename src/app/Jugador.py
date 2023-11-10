@@ -6,17 +6,17 @@ class Player:
         #parametros y valores iniciales
         self.COORDENADA_X_INICIAL = 1510
         self.COORDENADA_Y_INICIAL = 1950
-        self.VELOCIDAD_INICIAL = 4
+        self.VELOCIDAD_INICIAL = 3
         self.COLOR_INICIAL = (250, 120, 60, 0)
-        self.size = 35
+        self.size = 50
         self.sprite = pygame.transform.scale(sprite,(self.size, self.size))
         # para que las rotaciones no cambien al sprite como tal (pensá en tocar la tecla izquierda cuatro veces y que el avión termine girando, esto lo evita)
         self.spriteConst = self.sprite
         #limites aproximados del mapa
-        self.YlimiteArriba = 0
-        self.YlimiteAbajo = 2649
-        self.XLimiteIzquierdo = 0
-        self.XLimiteDerecho = 4405
+        self.YlimiteArriba = 20
+        self.YlimiteAbajo = 2629
+        self.XLimiteIzquierdo = 20
+        self.XLimiteDerecho = 4385
         
         self.x = self.COORDENADA_X_INICIAL
         self.y = self.COORDENADA_Y_INICIAL
@@ -42,30 +42,111 @@ class Player:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         self.left_pressed = True
-                        self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        if self.up_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 45)
+                        elif self.down_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 135)
+                        elif self.right_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+
                     if event.key == pygame.K_RIGHT:
                         self.right_pressed = True
                         #sprite = pygame.transform.flip(avion(),True,False)
-                        self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+                        #Setencia para averiguar si alguna diagonal horizontal derecha deba activarse
+                        if self.up_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -45)
+                        elif self.down_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -135)
+                        elif self.left_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+
                     if event.key == pygame.K_UP:
                         self.up_pressed = True
                         #sprite = pygame.transform.flip(avion(),False,False)
-                        if self.left_pressed == False and self.right_pressed == False:
+                        #Setencia para averiguar si alguna diagonal superior deba activarse
+                        if self.left_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 45)
+                        elif self.right_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -45)
+                        elif self.down_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                        else:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+
                     if event.key == pygame.K_DOWN:
                         self.down_pressed = True
                         #sprite = pygame.transform.flip(avion(),False,True)
-                        if self.left_pressed == False and self.right_pressed == False:
+                        #Setencia para averiguar si alguna diagonal inferior deba activarse
+                        if self.left_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 135)
+                        elif self.right_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -135)
+                        elif self.up_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+                        else:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                
+
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         self.left_pressed = False
+                        #Resetea la direccion del avion diagonal horizontal izquierdos a la tecla que siga presionada 
+                        if self.up_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+                        elif self.down_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                        elif self.right_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        
                     if event.key == pygame.K_RIGHT:
                         self.right_pressed = False
+                        #Resetea la direccion del avion diagonal horizontal derechos a la tecla que siga presionada 
+                        if self.up_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+                        elif self.down_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                        elif self.left_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+
                     if event.key == pygame.K_UP:
                         self.up_pressed = False
+                        #Resetea la direccion del avion diagonal superiores a la tecla que siga presionada 
+                        if self.left_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        elif self.right_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+                        elif self.down_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+
                     if event.key == pygame.K_DOWN:
                         self.down_pressed = False
+                        #Resetea la direccion del avion diagonal inferiores a la tecla que siga presionada 
+                        if self.left_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 90)
+                        elif self.right_pressed:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, -90)
+                        elif self.up_pressed:
+                            #does nothing
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 0)
+                        else:
+                            self.sprite = pygame.transform.rotate(self.spriteConst, 180)
 
     def colisionBordeArriba(self):
         nuevoY = self.y + self.speed
@@ -103,7 +184,7 @@ class Player:
                 self.velY = self.speed 
         self.x += self.velX
         self.y += self.velY
-        self.rect = pygame.Rect(int(self.x), int(self.y), 128, 128)
+        self.rect = pygame.Rect(int(self.x), int(self.y), self.size, self.size)
     
     def getX(self):
         return self.x
@@ -115,3 +196,5 @@ class Player:
         self.speed += aumentar
     def volverLaVelocidadALaOriginal(self):
         self.speed = self.VELOCIDAD_INICIAL
+    def getRect(self):
+        return self.rect

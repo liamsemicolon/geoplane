@@ -1,8 +1,5 @@
-import pygame
-
 class Coords:
-    def __init__(self) -> None:
-        self.X_displayCoords = 0
+    self.X_displayCoords = 0
         self.POSICION_X_MOSTRAR_COORDENADAS = 50
         self.POSICION_Y_MOSTRAR_COORDENADAS = 50
         self.BLANCO = (255, 255, 255)

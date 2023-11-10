@@ -52,6 +52,7 @@ class Game:
         self.player = Player(self.bg, self.spriteAvion)
         self.ticks = pygame.time.get_ticks()
         self.contadorTiempo = 0
+        self.auxiliar = 0
         self.tormentas = list()
         for i in range (0, 100):
             self.tormentas.append(Tormenta(self.bg, self.spriteTormenta))

@@ -21,13 +21,7 @@ class Ranking:
         self.surface = pygame.display.set_mode((1280, 720))
         self.TITLE = "Geoplane - Rankings"
         #lista de Rankings
-        self.rankings = [
-            ("LASH", 10000),
-            ("LIAM", 9000),
-            ("ARIE", 8000),
-            ("ARID", 7000),
-            ("AGUS", 6000),
-        ]
+        self.rankings = self.cargarRankingsPickle()
 
         #Coordenadas de los elementos
         self.tituloCoord = (330, 90)
@@ -92,15 +86,16 @@ class Ranking:
             draw.rect(win, self.verde, rect, 0)
         win.blit(self.buttonRender, (rect.x + (rect.width - self.buttonRender.get_width())//2, rect.y + (rect.height - self.buttonRender.get_height())//2))
 
-    def cargarRankingsPickle():
+    def cargarRankingsPickle(self):
         rankingDao = RankingDAO()
         puntajesDelRanking = rankingDao.unpickleArchivoDePuntajes()
         return puntajesDelRanking
     
-    def guardarRankingPickle(listaDePuntajes):
+    def guardarRankingPickle(self,listaDePuntajes):
         rankingDao = RankingDAO()
         rankingDao.pickleArchivoDePuntajes( listaDePuntajes)
     
     def añadirPuntaje(self, nombre, tiempo):
         self.jugador = (str(nombre), int(tiempo * self.valorPuntajeConst))
         self.rankings.append(self.jugador)
+        self.guardarRankingPickle(self.rankings)

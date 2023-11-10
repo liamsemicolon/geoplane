@@ -35,8 +35,8 @@ def main_menu():
             title=TITLE,
             width=1280
         )
-        game = Game() #Objeto de tipo Game
         ranking = Ranking() #Objeto de tipo Ranking
+        game = Game(ranking) #Objeto de tipo Game
         menu.add.button('Jugar', game.empezarPartida)                
         menu.add.button('Rankings',ranking.mostrarRanking)
         menu.add.button('Salir', pygame_menu.events.EXIT)

@@ -3,7 +3,8 @@ from pygame import *
 import sys
 from pygame.locals import *
 class GameOver:
-    def __init__(self, tiempo):
+    def __init__(self, tiempo, ranking):
+        self.ranking = ranking
         #Path de recursos
         self.ubicacionBG = "recursos/bg/bg_menu.png"        
         
@@ -12,7 +13,8 @@ class GameOver:
         self.blanco = (255, 255, 255)
         self.verde = (70, 189, 34)
         self.naranja = (237, 128, 19)
-        self.tiempo = str(tiempo)
+        self.tiempo = tiempo
+        self.nombre = "Player1"
         self.WIDTH, self.HEIGHT = 1280, 720
         self.bg_menu = pygame.image.load(self.ubicacionBG)
         self.surface = pygame.display.set_mode((1280, 720))
@@ -37,7 +39,7 @@ class GameOver:
         self.repetir = True
         self.win.blit(self.bg_menu, (0, 0))
         self.tituloGO = self.titleFont.render("Tiempo final:", True, self.blanco, self.gris)
-        self.tiempoGO = self.titleFont.render(self.tiempo + " segundos", True, self.blanco, self.gris)
+        self.tiempoGO = self.titleFont.render(str(self.tiempo) + " segundos", True, self.blanco, self.gris)
         self.tituloXCoord -= self.tituloGO.get_width()/2
         self.tiempoXCoord -= self.tiempoGO.get_width()/2
         self.win.blit(self.tituloGO, (self.tituloXCoord, self.tituloYCoord))
@@ -50,6 +52,7 @@ class GameOver:
                 if event.type == MOUSEBUTTONDOWN and event.button == 1:
                     if self.volver.collidepoint(mouse.get_pos()):
                         self.repetir = False
+                        self.ranking.añadirPuntaje(self.nombre, self.tiempo)
             self.pintar_boton(self.win, self.volver, "Volver")
             pygame.display.flip()
         pygame.display.set_caption('Geoplane')

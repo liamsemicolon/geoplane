@@ -6,7 +6,8 @@ from Tormenta import Tormenta
 from GameOver import GameOver
 
 class Game:
-    def __init__(self):
+    def __init__(self, ranking):
+        self.ranking = ranking
         self.ubicacionAvionNegro="recursos/miscellaneous/avioncitoNegro.png"
         self.ubicacionAvionBlanco="recursos/miscellaneous/avioncitoBlanco.png"
         self.ubicacionMapa = "recursos/miscellaneous/mapa.jpg"
@@ -49,9 +50,10 @@ class Game:
         self.bg = pygame.transform.scale(self.bg, (4405,2649))
         self.colision = False
         self.player = Player(self.bg, self.spriteAvion)
+        self.ticks = pygame.time.get_ticks()
         self.contadorTiempo = 0
         self.tormentas = list()
-        for i in range (0, 50):
+        for i in range (0, 100):
             self.tormentas.append(Tormenta(self.bg, self.spriteTormenta))
     #Main Loop
         while self.colision == False:
@@ -61,8 +63,10 @@ class Game:
             self.draw()
             #update
             self.update()
-        gameOver = GameOver(self.contadorTiempo)
+        gameOver = GameOver(self.contadorTiempo, self.ranking)
         gameOver.mostrarPantalla()
+        self.ranking.mostrarRanking()
+    
             
             
     #Fin def empezarPartida()
@@ -76,7 +80,7 @@ class Game:
         # la tormenta se dibuja relativa al mapa
         for t in self.tormentas:
             t.draw(self.win, self.mapaCoords)
-        self.mostrarTime()
+        self.mostrarTime(self.ticks)
  
      
     def update(self):
@@ -87,8 +91,8 @@ class Game:
         pygame.display.flip()
         
 
-    def mostrarTime(self):
-        self.tiempoActual = pygame.time.get_ticks()
+    def mostrarTime(self, ticks):
+        self.tiempoActual = pygame.time.get_ticks() - ticks
         if self.tiempoActual > self.auxiliar:
             self.auxiliar += 1000
             self.contadorTiempo+=1

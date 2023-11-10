@@ -3,26 +3,25 @@ import random
 #Player Class
 class Tormenta:
     def __init__(self, bg, sprite):
-        #parametros y valores iniciales
-        self.COORDENADA_X_INICIAL = 600
-        self.COORDENADA_Y_INICIAL = 600
         self.VELOCIDAD_INICIAL = 2.5
-        self.COLOR_INICIAL = (250, 120, 60, 0)
         
-        #limites aproximados del mapa
-        self.YlimiteArriba = 0
-        self.YlimiteAbajo = 2649
-        self.XLimiteIzquierdo = 0
-        self.XLimiteDerecho = 4405
         self.size = 350
-        self.sprite = pygame.transform.scale(sprite,(self.size, self.size))
-        self.x = self.COORDENADA_X_INICIAL
-        self.y = self.COORDENADA_Y_INICIAL
+        self.sprite = pygame.transform.scale(sprite,(self.size, self.size * .75))
         self.speed = self.VELOCIDAD_INICIAL
-        self.color = self.COLOR_INICIAL
-        self.rect = bg.get_rect()
+        self.rect = self.sprite.get_rect()
         self.velX = 0
         self.velY = 0
+        #limites aproximados del mapa
+        self.YlimiteArriba = 0
+        self.YlimiteAbajo = 2649 - self.sprite.get_height()
+        self.XLimiteIzquierdo = 0
+        self.XLimiteDerecho = 4405 - self.sprite.get_width()
+        #coords iniciales
+        self.COORDENADA_X_INICIAL = random.randint(self.XLimiteIzquierdo, self.XLimiteDerecho)
+        rand = random.randint(0, 1)
+        self.COORDENADA_Y_INICIAL = self.YlimiteArriba
+        self.x = self.COORDENADA_X_INICIAL
+        self.y = self.COORDENADA_Y_INICIAL
         self.target_x = self.x
         self.target_y = self.y
           
@@ -44,16 +43,13 @@ class Tormenta:
             return True
         
     def moverAPuntoAleatorio(self):
-        self.target_x = random.randint( self.XLimiteIzquierdo, self.XLimiteDerecho)
+        self.target_x = random.randint(self.XLimiteIzquierdo, self.XLimiteDerecho)
         self.target_y = random.randint(self.YlimiteArriba, self.YlimiteAbajo)
 
     def draw(self, win, coords):
         # variables hechas específicamente para hacer blit según la posición de la tormenta
         xBlit = coords[0] + self.getX()
         yBlit = coords[1] + self.getY()
-        # Para que la nube se muestre centrada
-        xBlit -= (self.sprite.get_width()/2)
-        yBlit -= (self.sprite.get_height()/2)
         # hacemos blit
         win.blit(self.sprite, (xBlit, yBlit))
       

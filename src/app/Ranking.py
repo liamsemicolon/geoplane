@@ -17,7 +17,7 @@ class Ranking:
         self.WIDTH, self.HEIGHT = 1280, 720
         self.bg_menu = pygame.image.load(self.ubicacionBG)
         self.surface = pygame.display.set_mode((1280, 720))
-        self.TITLE = "Geoplane Rankings"
+        self.TITLE = "Geoplane - Rankings"
 
         #Coordenadas de los elementos
         self.tituloCoord = (330, 90)

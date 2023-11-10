@@ -1,5 +1,6 @@
 import pygame
 import sys
+import math
 #Player Class
 class Player:
     def __init__(self, bg, sprite):
@@ -22,13 +23,15 @@ class Player:
         self.y = self.COORDENADA_Y_INICIAL
         self.speed = self.VELOCIDAD_INICIAL
         self.color = self.COLOR_INICIAL
-        self.rect = bg.get_rect()
+        self.rect = self.sprite.get_rect()
+        self.rect.center = (self.sprite.get_width()/2, self.sprite.get_height()/2)
         self.velX = 0
         self.velY = 0
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
+        self.s_pressed = False
     
     def draw(self, win):
         win.blit(self.sprite, (1280/2-self.sprite.get_width()/2, 720/2-self.sprite.get_height()/2))
@@ -54,7 +57,6 @@ class Player:
 
                     if event.key == pygame.K_RIGHT:
                         self.right_pressed = True
-                        #sprite = pygame.transform.flip(avion(),True,False)
                         #Setencia para averiguar si alguna diagonal horizontal derecha deba activarse
                         if self.up_pressed:
                             self.sprite = pygame.transform.rotate(self.spriteConst, -45)
@@ -68,7 +70,6 @@ class Player:
 
                     if event.key == pygame.K_UP:
                         self.up_pressed = True
-                        #sprite = pygame.transform.flip(avion(),False,False)
                         #Setencia para averiguar si alguna diagonal superior deba activarse
                         if self.left_pressed:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 45)
@@ -82,7 +83,6 @@ class Player:
 
                     if event.key == pygame.K_DOWN:
                         self.down_pressed = True
-                        #sprite = pygame.transform.flip(avion(),False,True)
                         #Setencia para averiguar si alguna diagonal inferior deba activarse
                         if self.left_pressed:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 135)
@@ -93,6 +93,10 @@ class Player:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 0)
                         else:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 180)
+                    
+                    if event.key == pygame.K_s:
+                        self.s_pressed = True
+                        
                 
 
                 if event.type == pygame.KEYUP:
@@ -148,6 +152,9 @@ class Player:
                         else:
                             self.sprite = pygame.transform.rotate(self.spriteConst, 180)
 
+                    if event.key == pygame.K_s:
+                        self.s_pressed = False
+
     def colisionBordeArriba(self):
         nuevoY = self.y + self.speed
         if(nuevoY<self.YlimiteArriba):
@@ -167,6 +174,10 @@ class Player:
     def update(self):
         self.velX = 0
         self.velY = 0
+        if self.s_pressed:
+            self.speed = self.VELOCIDAD_INICIAL * 2
+        else:
+            self.speed = self.VELOCIDAD_INICIAL
         if self.left_pressed and not self.right_pressed:
             if(self.colisionBordeIzquierdo()!=True):
                 self.velX = -self.speed

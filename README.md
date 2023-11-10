@@ -1,2 +1,2 @@
 # Geoplane
- geopenis
+ Videojuego desarrollado para Programación sobre Redes

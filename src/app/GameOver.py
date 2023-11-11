@@ -1,6 +1,7 @@
 import pygame
 from pygame import *
 import sys
+import os
 from pygame.locals import *
 class GameOver:
     def __init__(self, tiempo, ranking):
@@ -14,7 +15,7 @@ class GameOver:
         self.verde = (70, 189, 34)
         self.naranja = (237, 128, 19)
         self.tiempo = tiempo
-        self.nombre = "Player1"
+        self.nombre = os.getlogin()
         self.WIDTH, self.HEIGHT = 1280, 720
         self.bg_menu = pygame.image.load(self.ubicacionBG)
         self.surface = pygame.display.set_mode((1280, 720))

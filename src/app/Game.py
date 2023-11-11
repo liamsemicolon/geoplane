@@ -41,9 +41,9 @@ class Game:
         self.textTime = self.fontTime.render('', True, self.AZUL, None)
         self.textRectTime = self.textTime.get_rect()
         self.textRectTime.center = ( self.POSICION_X_MOSTRAR_TIME // 2, self.POSICION_Y_MOSTRAR_TIME // 2)
-        self.tiempoActual = 0
+        self.tiempoActual = -1
         self.auxiliar = 0
-        self.contadorTiempo=0
+        self.contadorTiempo=-1
         self.win = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 
     def empezarPartida(self):
@@ -51,7 +51,7 @@ class Game:
         self.colision = False
         self.player = Player(self.bg, self.spriteAvion)
         self.ticks = pygame.time.get_ticks()
-        self.contadorTiempo = 0
+        self.contadorTiempo = -1
         self.auxiliar = 0
         self.tormentas = list()
         for i in range (0, 100):
